@@ -16,6 +16,7 @@ module Bank
         @balance = @balance - amount - 200
         puts "You have withdrawn $#{amount / 100} and your new account balance is $#{@balance / 100}. You were charged a transaction fee of $2."
       end
+      return @balance
     end
 
     def add_interest(rate)
