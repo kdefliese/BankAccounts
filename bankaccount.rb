@@ -19,20 +19,20 @@ module Bank
 
     def withdraw(amount)
       if amount > @balance
-        puts "That's more than you have available in your account! Your account balance is $#{@balance}."
+        puts "That's more than you have available in your account! Your account balance is $#{@balance / 100}."
       elsif amount <= @balance
         @balance = @balance - amount
-        puts "You have withdrawn $#{amount} and your new account balance is $#{@balance}."
+        puts "You have withdrawn $#{amount / 100} and your new account balance is $#{@balance / 100}."
       end
     end
 
     def deposit(amount)
       @balance = @balance + amount
-      puts "You have deposited $#{amount} and your new account balance is $#{@balance}."
+      puts "You have deposited $#{amount / 100} and your new account balance is $#{@balance / 100}."
     end
 
     def check_balance
-      puts "Your account balance is $#{@balance}."
+      puts "Your account balance is $#{@balance / 100}."
     end
 
     def self.all
