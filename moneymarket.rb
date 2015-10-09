@@ -1,9 +1,9 @@
 module Bank
-  class MoneyMarketAccount < Account
+  class MoneyMarketAccount < SavingsAccount
     def initialize(id, starting_balance, date)
       super(id, starting_balance, date)
       if balance < 1000000
-        raise ArgumentError, "Savings accounts cannot be created with a balance of less than $10,000!"
+        raise ArgumentError, "Money market accounts cannot be created with a balance of less than $10,000!"
       end
       @transaction_count = 0
       @max_transactions = 0
@@ -29,6 +29,30 @@ module Bank
     end
 
     def deposit(amount)
+      if @transaction_count < 6
+        if @can_withdraw == false && (@balance + amount) > 1000000
+          @balance = @balance + amount
+          puts "You have deposited $#{amount / 100} and your new account balance is $#{@balance / 100}."
+          @can_withdraw = true
+        elsif @can_withdraw == false
+          @balance = @balance + amount
+          puts "You have deposited $#{amount / 100} and your new account balance is $#{@balance / 100}. However, you cannot make a withdrawal until your account balance is over $10,000."
+        elsif @can_withdraw == true
+          @balance = @balance + amount
+          puts "You have deposited $#{amount / 100} and your new account balance is $#{@balance / 100}."
+          @transaction_count += 1
+        end
+      elsif @transaction_count >= 6 && @can_withdraw == false && (@balance + amount) > 1000000
+        @balance = @balance + amount
+        puts "You have deposited $#{amount / 100} and your new account balance is $#{@balance / 100}."
+        @can_withdraw = true
+      elsif @transaction_count >= 6 && @can_withdraw == true
+        puts "You have already made six transactions this month so you cannot make any more transactions."
+      end
+    end
+
+    def reset_transactions
+      @transaction_count = 0
     end
 
   end
